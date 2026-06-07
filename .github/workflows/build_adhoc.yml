@@ -1,0 +1,17 @@
+name: Build Ad-hoc
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: |
+          xcodebuild -project boringNotch.xcodeproj -scheme boringNotch -configuration Release build CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BoringNotch
+          path: build/Build/Products/Release/boringNotch.app
